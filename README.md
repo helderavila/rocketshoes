@@ -58,6 +58,12 @@ Você pode baixar o layout do projeto no formato `.sketch` através [desse link]
 
 Para abrir o arquivo no formato `.sketch` em qualquer sistema operacional utilize a ferramenta [Figma](https://figma.com).
 
+## 🔧 Iniciando o projeto
+- Clone este repositório usando `git clone https://github.com/helderavila/rocketshoes.git`
+- Vá para o diretório usando: `cd rocketshoes`;
+- Rode o comando `yarn` para instalar todas as dependências;
+- Rode o comando `yarn start` para iniciar o servidor;
+
 ## 🤔 Como contribuir
 
 - Faça um fork desse repositório;
