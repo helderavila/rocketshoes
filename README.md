@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Rocketshoes" title="#delicinha" src="https://i.imgur.com/Cn4QrAg.png" width="250px" />
+    <img alt="Rocketshoes" title="#delicinha" src="https://i.imgur.com/ZYfDZ7m.png" width="250px" />
 </h1>
 
 <h4 align="center">
@@ -29,6 +29,10 @@
   <a href="#memo-licença">Licença</a>
 </p>
 
+<h1 align="center">
+    <img alt="Rocketshoes" title="#delicinha" src="https://i.imgur.com/9Fqbsdx.png" />
+</h1>
+
 <br>
 
 ## :rocket: Tecnologias
@@ -36,6 +40,13 @@
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [React](https://reactjs.org)
+- [Redux](https://github.com/reduxjs/redux)
+- [Axios](https://github.com/axios/axios)
+- [Reactotron](https://github.com/infinitered/reactotron)
+- [Immer](https://github.com/immerjs/immer)
+- [Styled Components](https://github.com/styled-components/styled-components)
+- [Polished](https://github.com/styled-components/polished)
+- [React Icons](https://github.com/react-icons/react-icons)
 
 ## 💻 Projeto
 
