@@ -19,7 +19,7 @@ function Cart({ cart, total, removeFromCart, updateAmount }) {
   }
 
   function decrement(product) {
-    updateAmount(product.id, product.amiunt - 1);
+    updateAmount(product.id, product.amount - 1);
   }
 
   return (
