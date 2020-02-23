@@ -1,6 +1,31 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { darken } from 'polished';
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg)
+  }
+
+  to {
+    transform: rotate(360deg)
+  }
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+
+  ${props =>
+    props.loadingProducts &&
+    css`
+      svg {
+        animation: ${rotate} 0.8s linear infinite;
+      }
+    `}
+`;
 
 export const ProductList = styled.ul`
   display: grid;
@@ -64,6 +89,14 @@ export const ProductList = styled.ul`
         flex: 1;
         text-align: center;
         font-weight: bold;
+
+        ${props =>
+          props.loadingButton &&
+          css`
+            svg {
+              animation: ${rotate} 0.8s linear infinite;
+            }
+          `}
       }
     }
   }
