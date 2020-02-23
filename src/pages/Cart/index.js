@@ -5,13 +5,14 @@ import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
   MdDelete,
+  MdRemoveShoppingCart,
 } from 'react-icons/md';
 
 import { formatPrice } from '../../util/format';
 
 import * as CartActions from '../../store/modules/cart/actions';
 
-import { Container, ProductTable, Total } from './styles';
+import { Container, ProductTable, Total, EmptyCart } from './styles';
 
 function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
   function increment(product) {
@@ -20,6 +21,17 @@ function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
 
   function decrement(product) {
     updateAmountRequest(product.id, product.amount - 1);
+  }
+
+  if (cart.length === 0) {
+    return (
+      <Container>
+        <EmptyCart>
+          <MdRemoveShoppingCart size={48} color="#333" />
+          <h1>Seu carrinho está vazio</h1>
+        </EmptyCart>
+      </Container>
+    );
   }
 
   return (

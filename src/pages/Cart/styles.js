@@ -93,3 +93,10 @@ export const Total = styled.div`
     margin-left: 5px;
   }
 `;
+
+export const EmptyCart = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

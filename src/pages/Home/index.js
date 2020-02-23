@@ -31,6 +31,7 @@ class Home extends Component {
 
   handleAddProduct = id => {
     const { addToCartRequest } = this.props;
+    this.setState({ loadingButton: true });
 
     addToCartRequest(id);
   };
