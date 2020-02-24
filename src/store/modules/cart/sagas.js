@@ -3,11 +3,7 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 import history from '../../../services/history';
 import { formatPrice } from '../../../util/format';
-import {
-  addToCartSuccess,
-  updateAmountSuccess,
-  loadingButtonAdd,
-} from './actions';
+import { addToCartSuccess, updateAmountSuccess } from './actions';
 
 function* addToCart({ id }) {
   const productExists = yield select(state =>
@@ -36,12 +32,9 @@ function* addToCart({ id }) {
       ...response.data,
       amount: 1,
       priceFormatted: formatPrice(response.data.price),
-      loadingButton: false,
     };
 
     yield put(addToCartSuccess(data));
-
-    console.tron.log(data);
     toast.success('Produdo adicionado ao carrinho com sucesso!');
     history.push('/cart');
   }

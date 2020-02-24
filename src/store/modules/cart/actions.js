@@ -1,3 +1,10 @@
+export function loadingAddButton(value) {
+  return {
+    type: '@cart/ADD_BUTTON',
+    value,
+  };
+}
+
 export function addToCartRequest(id) {
   return {
     type: '@cart/ADD_REQUEST',

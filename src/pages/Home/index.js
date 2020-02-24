@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { AiOutlineLoading } from 'react-icons/ai';
 import { formatPrice } from '../../util/format';
@@ -10,83 +9,73 @@ import * as CartActions from '../../store/modules/cart/actions';
 
 import { ProductList, LoadingContainer } from './styles';
 
-class Home extends Component {
-  state = {
-    products: [],
-    loadingProducts: false,
-    loadingButton: false,
-  };
+export default function Home() {
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(false);
 
-  async componentDidMount() {
-    this.setState({ loadingProducts: true });
-    const response = await api.get('products');
+  const amount = useSelector(state =>
+    state.cart.reduce((sumAmount, product) => {
+      sumAmount[product.id] = product.amount;
 
-    const data = response.data.map(product => ({
-      ...product,
-      priceFormatted: formatPrice(product.price),
-    }));
+      return sumAmount;
+    }, {})
+  );
 
-    this.setState({ products: data, loadingProducts: false });
-  }
+  const dispatch = useDispatch();
 
-  handleAddProduct = id => {
-    const { addToCartRequest } = this.props;
-    this.setState({ loadingButton: true });
+  useEffect(() => {
+    async function loadProducts() {
+      setLoadingProducts(true);
+      const response = await api.get('products');
 
-    addToCartRequest(id);
-  };
+      const data = response.data.map(product => ({
+        ...product,
+        priceFormatted: formatPrice(product.price),
+      }));
 
-  render() {
-    const { products, loadingProducts, loadingButton } = this.state;
-    const { amount } = this.props;
-    if (loadingProducts) {
-      return (
-        <LoadingContainer loadingProducts={loadingProducts}>
-          <AiOutlineLoading size={80} color="#FFF" />
-        </LoadingContainer>
-      );
+      setProducts(data);
+      setLoadingProducts(false);
     }
 
-    return (
-      <ProductList loading={loadingProducts} loadingButton={loadingButton}>
-        {products.map(product => (
-          <li key={String(product.id)}>
-            <img src={product.image} alt={product.title} />
-            <strong>{product.title}</strong>
-            <span>{product.priceFormatted}</span>
-            <button
-              type="button"
-              onClick={() => this.handleAddProduct(product.id)}
-            >
-              <div>
-                <MdAddShoppingCart size={16} color="#FFF" />{' '}
-                {amount[product.id] || 0}
-              </div>
+    loadProducts();
+  }, []);
 
-              <span>
-                {loadingButton ? (
-                  <AiOutlineLoading size={14} color="#FFF" />
-                ) : (
-                  'ADICIONAR AO CARRINHO'
-                )}
-              </span>
-            </button>
-          </li>
-        ))}
-      </ProductList>
+  function handleAddProduct(id) {
+    dispatch(CartActions.addToCartRequest(id));
+  }
+
+  if (loadingProducts) {
+    return (
+      <LoadingContainer loadingProducts={loadingProducts}>
+        <AiOutlineLoading size={80} color="#FFF" />
+      </LoadingContainer>
     );
   }
+
+  return (
+    <ProductList loading={loadingProducts} loadingButton={loadingButton}>
+      {products.map(product => (
+        <li key={String(product.id)}>
+          <img src={product.image} alt={product.title} />
+          <strong>{product.title}</strong>
+          <span>{product.priceFormatted}</span>
+          <button type="button" onClick={() => handleAddProduct(product.id)}>
+            <div>
+              <MdAddShoppingCart size={16} color="#FFF" />{' '}
+              {amount[product.id] || 0}
+            </div>
+
+            <span>
+              {loadingButton ? (
+                <AiOutlineLoading size={14} color="#FFF" />
+              ) : (
+                'ADICIONAR AO CARRINHO'
+              )}
+            </span>
+          </button>
+        </li>
+      ))}
+    </ProductList>
+  );
 }
-
-const mapStateToProps = state => ({
-  amount: state.cart.reduce((amount, product) => {
-    amount[product.id] = product.amount;
-
-    return amount;
-  }, {}),
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
